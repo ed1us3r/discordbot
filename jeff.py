@@ -5,7 +5,6 @@ import random
 import asyncio
 
 from datetime import datetime
-from PIL import Image
 from discord import VoiceClient, VoiceChannel, FFmpegPCMAudio
 
 random_quotes_list = [

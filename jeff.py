@@ -1,9 +1,12 @@
+import io
+
 import discord
 import random
 import asyncio
 
 from datetime import datetime
-from PIL import Image 
+from PIL import Image
+from discord import VoiceClient, VoiceChannel, FFmpegPCMAudio
 
 random_quotes_list = [
         'Des isch ka Roggatsience       ~ T.Schaller',
@@ -65,7 +68,7 @@ class MyClient(discord.Client):
 
         if message.channel.type != discord.ChannelType.private: #Only for non Private DM Conversations
             print(datetimeobj.strftime("%d-%b-%Y (%H:%M:%S.%f)") + ' >>  ' + 'Nachricht von '+ message.author.name + ' im Channel ' + message.channel.name + ' erhalten.  << ' )
-            if message.channel.name == 'test'  and message.author.name != 'J3ff':
+            if message.channel.name == 'testchat'  and message.author.name != 'J3ff':
                 print(datetimeobj.strftime("%d-%b-%Y (%H:%M:%S.%f)") + ' >>  ' + 'Nachricht im ' + message.channel.name + ' ... Erstelle eine Nachricht  << ' )
                 if random.choice(choice_list):
                     response = create_message(message)
@@ -116,8 +119,6 @@ def create_message(message):
              return 'Der Meister hat gesprochen'
         elif message.author.name == 'hasselhoff':
              return 'Was ein Spasst dieser David'
-        elif message.author.name == 'fl0':
-             return 'Richtig gut aussehender Linux User dieser Florian'
         elif message.author.name == 'Der Laternisierer':
              return 'Der Tiger hat gesprochen'
         elif message.author.name == 'philsstift':
@@ -134,12 +135,26 @@ def create_random_quotes():
     random_quote = random.choice(random_quotes_list)
     return random_quote
 
+async def play_auenland(message):
+    #Creates and plays the Auenland Scream and establishes the needed Voice Connection
+    channel = message.author.voice.channel
+    print("Channel to Connect to :"+channel.name)
+    vc = await channel.connect()
+
+    vc.play(FFmpegPCMAudio('Auenland.mp3'))
+
+    while vc.is_playing():
+        await asyncio.sleep(1)
+    else:
+        await vc.disconnect()
 
 
 async def bot_comm_def(message):
     #Starts Bot dialogue from public server
+    message = message
     msg = message.content
     print("Message to Bot contains:  >> "+ msg+ "     <<")
+
     if msg.startswith('!'):
         #Help Dialogue
         if msg == "!help"or msg == "!h" or  msg == "!HELP" or msg == "!Help" or "help" in msg or "HELP" in msg or "Help" in msg:
@@ -167,6 +182,12 @@ async def bot_comm_def(message):
             troll_message += "Ra Ra Rasputin ... Jeff is a russian Machine !!!  " 
             await MyClient.send_direct_message(message,troll_message )
             return
+        elif msg == "!Gollum" or msg =="!gollum":
+            #source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio("Auenland.mp3"))
+            #client.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
+            await play_auenland(message)
+            #await client.send('Now playing: {}'.format("./Auenland.ogg"))
+
         elif msg == "!StundenPlan" or msg == "!Stunenplan" or msg == "Studenplan":
             today = datetime.now()
             wek = today.strftime("%W")
@@ -178,11 +199,11 @@ async def bot_comm_def(message):
                 picture = discord.File(f)
                 await MyClient.send_direct_message(message,picture)
             return
-            
 
          
 #     Run bot
-client = MyClient()
-client.run("INSER YOUR TOKEN")
+if __name__ == '__main__':
+    client = MyClient()
+    client.run("NzU2MTk5OTc3NDM2NTc3ODUz.X2OYHA.C3hiYKIiqx0tqiss8iNMfzpc_AE")
 
 

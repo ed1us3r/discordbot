@@ -140,7 +140,7 @@ async def play_auenland(message):
     print("Channel to Connect to :"+channel.name)
     vc = await channel.connect()
 
-    vc.play(FFmpegPCMAudio('Auenland.mp3'))
+    vc.play(FFmpegPCMAudio('src/Auenland.mp3'))
 
     while vc.is_playing():
         await asyncio.sleep(1)

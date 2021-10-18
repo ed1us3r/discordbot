@@ -67,6 +67,8 @@ class MyClient(discord.Client):
 
         if message.channel.type != discord.ChannelType.private: #Only for non Private DM Conversations
             print(datetimeobj.strftime("%d-%b-%Y (%H:%M:%S.%f)") + ' >>  ' + 'Nachricht von '+ message.author.name + ' im Channel ' + message.channel.name + ' erhalten.  << ' )
+            if message.channel.name == "call-a-gollum":
+                await message.delete()
             if message.channel.name == 'testchat'  and message.author.name != 'J3ff':
                 print(datetimeobj.strftime("%d-%b-%Y (%H:%M:%S.%f)") + ' >>  ' + 'Nachricht im ' + message.channel.name + ' ... Erstelle eine Nachricht  << ' )
                 if random.choice(choice_list):
@@ -186,6 +188,8 @@ async def bot_comm_def(message):
             #client.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
             await play_auenland(message)
             #await client.send('Now playing: {}'.format("./Auenland.ogg"))
+            if message.channel.name == "call-a-gollum":
+                await message.delete()
 
         elif msg == "!StundenPlan" or msg == "!Stunenplan" or msg == "Studenplan":
             today = datetime.now()
@@ -199,10 +203,14 @@ async def bot_comm_def(message):
                 await MyClient.send_direct_message(message,picture)
             return
 
-         
-#     Run bot
-if __name__ == '__main__':
+def run():
     client = MyClient()
     client.run("NzU2MTk5OTc3NDM2NTc3ODUz.X2OYHA.C3hiYKIiqx0tqiss8iNMfzpc_AE")
+    return
+
+#     Run bot
+if __name__ == '__main__':
+    run();
+
 
 

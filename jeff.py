@@ -6,6 +6,10 @@ import asyncio
 
 from datetime import datetime
 from discord import VoiceClient, VoiceChannel, FFmpegPCMAudio
+import discord
+from dotenv import load_dotenv
+import os
+
 
 random_quotes_list = [
         'Des isch ka Roggatsience       ~ T.Schaller',
@@ -205,7 +209,9 @@ async def bot_comm_def(message):
 
 def run():
     client = MyClient()
-    client.run("NzU2MTk5OTc3NDM2NTc3ODUz.X2OYHA.C3hiYKIiqx0tqiss8iNMfzpc_AE")
+    load_dotenv()
+    TOKEN = os.getenv('DISCORD_TOKEN')
+    client.run(TOKEN)
     return
 
 #     Run bot

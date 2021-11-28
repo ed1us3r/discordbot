@@ -46,7 +46,7 @@ def Logging():
 #     Run bot
 if __name__ == '__main__':
 #Start Logging
-# Jenkins Test
+# Jenkins Test 2
     if(options["jenkins"]):
         Logging()
         logging.info('Running bot as jenkins.')

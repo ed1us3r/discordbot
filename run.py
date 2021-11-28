@@ -52,6 +52,7 @@ if __name__ == '__main__':
         logging.info('Running bot as jenkins.')
         jeff.run();
     elif(options["test"]):
+        Logging()
         logging.info('Running bot in Test-mode.')
         jeff.run();
     elif(options["verbosity"]):
